@@ -256,3 +256,7 @@ After that, you need to update the apt:
 
 - Using the individual packages:
 Please refer [Intel_SGX_Installation_Guide_Linux](https://download.01.org/intel-sgx/latest/linux-latest/docs/) for detail.
+
+---
+
+*This is a summary version of the one that can be found in Intel's linux-sgx repository*
