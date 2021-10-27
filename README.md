@@ -70,7 +70,9 @@ $ sudo /sbin/modprobe isgx
 $ sudo /sbin/modprobe isgx
 ```
 
-**Note:** To check if the driver is installed, check under the /dev folder ```$ ls /dev``` and see if there's a **/sgx** or **/isgx** (no DCAP driver) on there. Both should have 2 elements inside: *'enclave'* and *'provision'*. If one of them is present, you have successfully installed the Intel SGX Driver.
+**Note:** To check if the driver is installed, check under the /dev folder ```$ ls /dev``` and see if there's a **/sgx** or **/isgx** (no DCAP driver) folder there. Both should have 2 elements inside: *'enclave'* and *'provision'*. If one of them is present, you have successfully installed the Intel SGX Driver.
+
+**Additional Note:** If you are trying to setup this environment on a Docker container, the Driver needs to be installed on the host running that container and not in the container itself. You'll need to mount the host's **/dev/sgx** or **/dev/isgx** directory (depending on which driver you installed) into the container.
 
 ### Install SGX SDK
 1- Make sure you have one of these OS's
