@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  ra_application:
+  sgx_dcap_container:
     image: sgx-dcap-enabled-sample
     devices:
       - /dev/sgx/enclave
