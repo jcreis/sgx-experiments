@@ -1,7 +1,3 @@
-**Disclaimer:** *This is a summary version of the one that can be found in Intel's linux-sgx repository, with some complementary information I found useful to add upon setting up the environment myself*
-
----
-
 ## Set up
 We choose to work in a Linux environment, so all the steps described here and all the code here in this repository will focus only on this specific environment. Any other OS setup is outside of our scope in this repository.
 
@@ -260,4 +256,10 @@ After that, you need to update the apt:
 
 - Using the individual packages:
 Please refer [Intel_SGX_Installation_Guide_Linux](https://download.01.org/intel-sgx/latest/linux-latest/docs/) for detail.
+
+</br>
+---
+
+**Disclaimer:** *This is a summary version of the one that can be found in Intel's linux-sgx repository, with some complementary information I found useful to add upon setting up the environment myself*
+
 
