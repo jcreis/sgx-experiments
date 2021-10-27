@@ -75,14 +75,48 @@ $ sudo /sbin/modprobe isgx
 **Additional Note:** If you are trying to setup this environment on a Docker container, the Driver needs to be installed on the host running that container and not in the container itself. You'll need to mount the host's **/dev/sgx** or **/dev/isgx** directory (depending on which driver you installed) into the container.
 
 ### Install SGX SDK
-1- Make sure you have one of these OS's
 
-Ubuntu* 18.04 LTS Desktop 64bits
-Ubuntu* 18.04 LTS Server 64bits
-Ubuntu* 20.04 LTS Desktop 64bits
-Ubuntu* 20.04 LTS Server 64bits
-Red Hat Enterprise Linux Server release 8.2 64bits
-CentOS 8.2 64bits
-
-2- 
+- Ensure that you have one of the following required OS's:
+   * Ubuntu 18.04 LTS Desktop 64bits
+   * Ubuntu 18.04 LTS Server 64bits
+   * Ubuntu 20.04 LTS Desktop 64bits
+   * Ubuntu 20.04 LTS Server 64bits
+   * Red Hat Enterprise Linux Server release 8.2 64bits
+   * CentOS 8.2 64bits
+- Run the following commands to install the required tools to build the SDK:
+   * On Ubuntu 18.04: 
+      ```
+      $ sudo apt-get install build-essential ocaml ocamlbuild automake autoconf libtool wget python libssl-dev git cmake perl
+      ```
+  * On Ubuntu 20.04:
+      ```
+      $ sudo apt-get install build-essential ocaml ocamlbuild automake autoconf libtool wget python-is-python3 libssl-dev git cmake perl
+      ```
+  * On Red Hat Enterprise Linux 8.2:
+      ```
+      $ sudo yum groupinstall 'Development Tools'
+      $ sudo yum install ocaml ocaml-ocamlbuild wget python2 openssl-devel git cmake perl
+      $ sudo alternatives --set python /usr/bin/python2
+      ```
+  * On CentOS 8.2:
+      ```
+      $ sudo dnf group install 'Development Tools'
+      $ sudo dnf --enablerepo=PowerTools install ocaml ocaml-ocamlbuild redhat-rpm-config openssl-devel wget rpm-build git cmake perl python2
+      $ sudo alternatives --set python /usr/bin/python2
+      ```
+      
+- Use the following command to install additional required tools and latest Intel(R) SGX SDK Installer to build the Intel(R) SGX PSW:  
+  1)  To install the additional required tools:
+      * On Ubuntu 18.04 and Ubuntu 20.04:
+      ```
+        $ sudo apt-get install libssl-dev libcurl4-openssl-dev protobuf-compiler libprotobuf-dev debhelper cmake reprepro unzip
+      ```
+      * On Red Hat Enterprise Linux 8.2:
+      ```
+        $ sudo yum install openssl-devel libcurl-devel protobuf-devel cmake rpm-build createrepo yum-utils
+      ```
+      * On CentOS 8.2:
+      ```
+        $ sudo dnf --enablerepo=PowerTools install openssl-devel libcurl-devel protobuf-devel cmake rpm-build createrepo yum-utils
+      ```
 
