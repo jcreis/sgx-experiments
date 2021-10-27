@@ -23,26 +23,52 @@ To build the environment suitable to run code leveraging Intel SGX instructions,
 
 - Ensure that the version of installed kernel headers matches the active kernel version on the system:
     * On Ubuntu: 
-        * check if matching kernel headers are installed: '''$ dpkg-query -s linux-headers-$(uname -r)'''
-        * install matching headers: '''$ sudo apt-get install linux-headers-$(uname -r)'''
+        * check if matching kernel headers are installed: 
+            ```
+            $ dpkg-query -s linux-headers-$(uname -r)
+            ```
+        * install matching headers: 
+            ```
+            $ sudo apt-get install linux-headers-$(uname -r)
+            ```
     * On RHEL, Fedora or CentOS:
-        * check if matching kernel headers are installed: '''$ ls /usr/src/kernels/$(uname -r)'''
-        * install matching headers: '''$ sudo yum install kernel-devel'''
-        * if the matching headers are still missing in /usr/src/kernels after the above command, try updating the kernel + reboot: '''$ sudo yum install kernel
-                            $ sudo reboot'''
+        * check if matching kernel headers are installed: 
+            ``` 
+            $ ls /usr/src/kernels/$(uname -r)
+            ```
+        * install matching headers: 
+            ```
+            $ sudo yum install kernel-devel
+            ```
+        * if the matching headers are still missing in /usr/src/kernels after the above command, try updating the kernel + reboot: 
+            ```
+            $ sudo yum install kernel
+            $ sudo reboot
+            ```
         * Then choose updated kernel on boot menu 
-        * On RHEL 8.0 you'll need *elfutils-libelf-devel* package: '''$ sudo yum install elfutils-libelf-devel'''
+        * On RHEL 8.0 you'll need *elfutils-libelf-devel* package: 
+            ```
+            $ sudo yum install elfutils-libelf-devel
+            ```
 
-- Run the build command in the project's root directory (that we just cloned): '''$ make'''
+- Run the build command in the project's root directory (that we just cloned): 
+      ```
+      $ make
+      ```
 
 - Now that we have it built, we need to install it. For that, run:
-'''$ sudo mkdir -p "/lib/modules/"`uname -r`"/kernel/drivers/intel/sgx"   
+```
+$ sudo mkdir -p "/lib/modules/"`uname -r`"/kernel/drivers/intel/sgx"   
 $ sudo cp isgx.ko "/lib/modules/"`uname -r`"/kernel/drivers/intel/sgx"  
 $ sudo sh -c "cat /etc/modules | grep -Fxq isgx || echo isgx >> /etc/modules"
 $ sudo /sbin/depmod
-$ sudo /sbin/modprobe isgx'''
+$ sudo /sbin/modprobe isgx
+```
 
-- On RHEL or CentOS, need to run the following command on each reboot: '$ sudo /sbin/modprobe isgx'
+- On RHEL or CentOS, need to run the following command on each reboot: 
+```
+$ sudo /sbin/modprobe isgx
+```
 
 ### Install SGX SDK
 1- Make sure you have one of these OS's
