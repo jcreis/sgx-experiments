@@ -1,7 +1,3 @@
-
-## Introduction
-Intel Software Guard Extensions (SGX) is Intel's latest technology to assure execution of data inside Trusted Execution Environments (TEEs). This TEEs enable software developers to protect selected code and data from being accessed and stolen by 3rd parties, regardless if they have high level permissions to do so, or even if they have physical access to the machine running that code. This comes in handy when we are dealing with cloud providers to run our sensitive data.
-
 ## Set up
 We choose to work in a Linux environment, so all the steps described here and all the code here in this repository will focus only on this specific environment. Any other OS setup is outside of our scope in this repository.
 
