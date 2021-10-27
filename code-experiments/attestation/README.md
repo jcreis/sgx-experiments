@@ -1,3 +1,5 @@
+## ENVIRONMENT SETUP
+
 ### ECDSA attestation
 To enable ECDSA attestation    
 - Ensure that you have the following required hardware:
