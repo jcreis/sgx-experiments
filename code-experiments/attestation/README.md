@@ -25,3 +25,22 @@ The aesmd service uses the HTTP protocol to initialize some services.
 If a proxy is required for the HTTP protocol, you may need to manually set up the proxy for the aesmd service.  
 You should manually edit the file `/etc/aesmd.conf` (refer to the comments in the file) to set the proxy for the aesmd service.  
 After you configure the proxy, you need to restart the service to enable the proxy.
+
+
+## INTRODUCTION
+Attestation by definition means the process of proving the integrity of something. 
+Here it means the process of proving that an enclave has been established in a secure hardware environment and that a component's code has been properly instantiated inside that enclave. By doing so, we can assure that code running inside the enclave can be trusted.
+
+This attestation process can be Local (both parties inside the same machine) or Remote (challenger is a remote entity).
+
+Looking at the Remote Attestation mechanism, it assumes that a remote party can verify that the right application is running inside an enclave on an Intel SGX enabled platform. 
+Remote attestation provides verification for three things: the application’s identity, its intactness (that it has not been tampered with), and that it is running securely within an enclave on an Intel SGX enabled platform. Attestation is necessary in order to make remote access secure, since very often the enclave’s contents may have to be accessed remotely, not from the same platform.
+
+
+The Remote Attestation mechanism uses a Quoting Enclave (QE) to sign Reports (Application Enclave data) to be verified by remote parties as proof of trust. To do that, the QE requires an Attestation Key. The details of how the platform acquires the attestation key and how the quote can be verified differs between the two remote attestation models: EPID and DCAP (ECDSA)
+
+EPID - When using EPID attestation, the Quoting Enclave uses an EPID key as the Attestation key, that it uses to sign the quote. This attestation key is given by Intel’s Attestation Service (IAS). The Quoting Enclave proves to Intel that it is running on a genuine SGX platform (using the Root Provisioning Key) and Intel provides it an EPID key.
+
+DCAP - When using DCAP attestation, Eliptic Curve cryptography is used to sign the quote. The Quoting Enclave generates an EC key, it then uses a derivative of the Root Provisioning Key called the Provisioning Certification Key (PCK) to sign the public part of this EC key and include it in its quotes.
+
+Thus, instead of going to the Intel Attestation Service to have a quote verified, a verifier can acquire all the necessary verification inputs using the Platform Certification Key (PCK) certificate. It can be obtained prior to an actual attestation taking place, since the PCK certificate is valid for extended time periods (i.e., years) it can be cached and reused across many attestations. 
