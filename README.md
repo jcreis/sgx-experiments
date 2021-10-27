@@ -12,6 +12,8 @@ To build the environment suitable to run code leveraging Intel SGX instructions,
 - Intel SGX Software Development Kit (SDK)
 - Intel SGX Platform Software (PSW)
 
+---
+
 ### Install SGX Driver
 - clone from this repository to your local machine '$ git clone https://github.com/intel/linux-sgx-driver'
 
@@ -74,6 +76,8 @@ $ sudo /sbin/modprobe isgx
 
 **Additional Note:** If you are trying to setup this environment on a Docker container, the Driver needs to be installed on the host running that container and not in the container itself. You'll need to mount the host's **/dev/sgx** or **/dev/isgx** directory (depending on which driver you installed) into the container.
 
+---
+
 ### Install SGX SDK
 
 - Ensure that you have one of the following required OS's:
@@ -105,7 +109,7 @@ $ sudo /sbin/modprobe isgx
       $ sudo alternatives --set python /usr/bin/python2
       ```
       
-- Use the following command to install additional required tools and latest Intel(R) SGX SDK Installer to build the Intel(R) SGX PSW:  
+- Use the following command to install additional required tools and latest SDK installer to build the PSW:  
   1)  To install the additional required tools:
       * On Ubuntu 18.04 and Ubuntu 20.04:
       ```
@@ -119,4 +123,11 @@ $ sudo /sbin/modprobe isgx
       ```
         $ sudo dnf --enablerepo=PowerTools install openssl-devel libcurl-devel protobuf-devel cmake rpm-build createrepo yum-utils
       ```
+  2) To install latest SDK installer: Ensure that you have downloaded latest Intel(R) SGX SDK Installer from the [Intel(R) SGX SDK](https://software.intel.com/en-us/sgx-sdk/download) and followed the Installation Guide in the same page to install latest Intel(R) SGX SDK Installer.
+
+- Download the source code and prepare the submodules and prebuilt binaries:
+```
+   $ git clone https://github.com/intel/linux-sgx.git
+   $ cd linux-sgx && make preparation
+```
 
