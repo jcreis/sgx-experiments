@@ -49,4 +49,4 @@ DCAP - When using DCAP attestation, Eliptic Curve cryptography is used to sign t
 
 Thus, instead of going to the Intel Attestation Service to have a quote verified, a verifier can acquire all the necessary verification inputs using the Platform Certification Key (PCK) certificate. It can be obtained prior to an actual attestation taking place, since the PCK certificate is valid for extended time periods (i.e., years) it can be cached and reused across many attestations. 
 
-![Alt text](https://github.com/jcreis/jcreis/blob/main/tech-icons/java-icon.jpg?raw=true "Title")
+![Alt text](https://github.com/jcreis/sgx-experiments/blob/main/utils/remote_attest.jpg?raw=true "Remote Attestation")
