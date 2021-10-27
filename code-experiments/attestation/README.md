@@ -43,7 +43,7 @@ Remote attestation provides verification for three things: the application’s i
 
 The Remote Attestation mechanism needs one thing that ensures trustworthiness to the remote party - it uses a Quoting Enclave (QE) to sign Reports (Application Enclave data) to be verified by remote parties as proof of trust. To do that, the QE requires an Attestation Key. The details of how the platform acquires the attestation key and how the quote can be verified differs between the two remote attestation models: EPID and DCAP (ECDSA)
 
-![Alt_image](https://github.com/jcreis/sgx-experiments/blob/main/utils/remote_attest.jpg?raw=true "Remote Attestation Procedure") 
+![[Alt text](https://github.com/jcreis/sgx-experiments/blob/main/utils/remote_attest.jpg?raw=true "Remote Attestation Procedure") 
 
 *(image from [ra_tls] whitepaper)*
 
