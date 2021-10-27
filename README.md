@@ -176,6 +176,8 @@ NOTE: You need to set up the needed environment variables before compiling your 
   $ source $<sgx-sdk-install-path>/environment
 ```
 
+---
+
 ### Install SGX PSW
 
 #### 1) Setup the environment
