@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  ra_application:
+    image: sgx-dcap-enabled-sample
+    devices:
+      - /dev/sgx/enclave
+      - /dev/sgx/provision
+    volumes:
+      - /var/run/aesmd:/var/run/aesmd
+    stdin_open: true
+    tty: true
+    environment:
+      - http_proxy
+      - https_proxy
