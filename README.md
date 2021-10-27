@@ -7,5 +7,5 @@ TODO - some image describing a SGX-enabled System and how it works
 
 Here we go through what we need to setup to run code that leverages Intel SGX security benefits, and we set up and run examples (based on those provided by Intel) either on your local machine or on inside a Docker container.
 
-* */code-experiments* - an environment setup guide can be found in the README.md file
+* */code-experiments* - environment setup guide can be found in the README.md file and some examples to run inside SGX
 * */docker-files* - instructions and files to build a sgx-enabled environment to run code that leverages sgx
