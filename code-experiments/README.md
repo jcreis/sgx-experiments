@@ -259,4 +259,4 @@ Please refer [Intel_SGX_Installation_Guide_Linux](https://download.01.org/intel-
 
 ---
 
-*This is a summary version of the one that can be found in Intel's linux-sgx repository*
+**Disclaimer:** *This is a summary version of the one that can be found in Intel's linux-sgx repository*
