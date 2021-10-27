@@ -80,7 +80,7 @@ $ sudo /sbin/modprobe isgx
 
 ### Install SGX SDK
 
-#### Setup the environment
+#### 1) Setup the environment
 
 - Ensure that you have one of the following required OS's:
    * Ubuntu 18.04 LTS Desktop 64bits
@@ -139,7 +139,7 @@ $ sudo /sbin/modprobe isgx
     $ which as ld ld.gold objdump
   ```
   
-  #### Build the SDK and SDK installer
+  #### 2) Build the SDK and SDK installer
 - To build the SDK with default configuration, run the following command in the linux-sgx project's root directory:
 ```
   $ make sdk
@@ -149,7 +149,7 @@ $ sudo /sbin/modprobe isgx
   $ make clean
 ```
 
-  #### Install the SDK
+  #### 3) Install the SDK
   
 - Use the following command to install the required tool to use Intel(R) SGX SDK:
   * On Ubuntu 18.04 and Ubuntu 20.04:
@@ -178,7 +178,7 @@ NOTE: You need to set up the needed environment variables before compiling your 
 
 ### Install SGX PSW
 
-#### Setup the environment
+#### 1) Setup the environment
 
 - Ensure that you have one of the following required OS's:
    * Ubuntu 18.04 LTS Desktop 64bits
@@ -190,7 +190,7 @@ NOTE: You need to set up the needed environment variables before compiling your 
  
  - All the other stuff needed should be covered by the previous SDK installation, so we don't need to install any more tools
   
-  #### Build the PSW
+  #### 2) Build the PSW
 - To build the PSW with default configuration, run the following command in the linux-sgx project's root directory:
 ```
   $ make psw
@@ -230,7 +230,7 @@ After that, you need to update the apt:
   $ sudo yum --nogpgcheck install <package>
   ```
 
-  #### Install the PSW
+  #### 3) Install the PSW
   
 - Use the following command to install the required tools:
   * On Ubuntu 18.04 and Ubuntu 20.04:
