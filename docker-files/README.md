@@ -5,7 +5,7 @@
 $ docker build -t  .
 ```
 
-#### docker-compose file creates a container based on the image created previously by the Dockerfile, mounting the SDX Driver into the container's /dev/sgx folder, as well as enabling the AESMD service that runs on the host
+#### The docker-compose file creates a container based on the image created previously by the Dockerfile, mounting the SDX Driver into the container's /dev/sgx folder, as well as enabling the AESMD service that runs on the host
 
 * create the container using the docker-compose file
 ```
