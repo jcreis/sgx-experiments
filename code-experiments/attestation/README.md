@@ -41,10 +41,12 @@ Looking at the Remote Attestation mechanism, it assumes that a remote party can 
 Remote attestation provides verification for three things: the application’s identity, its intactness (that it has not been tampered with), and that it is running securely within an enclave on an Intel SGX enabled platform. Attestation is necessary in order to make remote access secure, since very often the enclave’s contents may have to be accessed remotely, not from the same platform.
 
 
-The Remote Attestation mechanism uses a Quoting Enclave (QE) to sign Reports (Application Enclave data) to be verified by remote parties as proof of trust. To do that, the QE requires an Attestation Key. The details of how the platform acquires the attestation key and how the quote can be verified differs between the two remote attestation models: EPID and DCAP (ECDSA)
+The Remote Attestation mechanism needs one thing that ensures trustworthiness to the remote party - it uses a Quoting Enclave (QE) to sign Reports (Application Enclave data) to be verified by remote parties as proof of trust. To do that, the QE requires an Attestation Key. The details of how the platform acquires the attestation key and how the quote can be verified differs between the two remote attestation models: EPID and DCAP (ECDSA)
 
 EPID - When using EPID attestation, the Quoting Enclave uses an EPID key as the Attestation key, that it uses to sign the quote. This attestation key is given by Intel’s Attestation Service (IAS). The Quoting Enclave proves to Intel that it is running on a genuine SGX platform (using the Root Provisioning Key) and Intel provides it an EPID key.
 
 DCAP - When using DCAP attestation, Eliptic Curve cryptography is used to sign the quote. The Quoting Enclave generates an EC key, it then uses a derivative of the Root Provisioning Key called the Provisioning Certification Key (PCK) to sign the public part of this EC key and include it in its quotes.
 
 Thus, instead of going to the Intel Attestation Service to have a quote verified, a verifier can acquire all the necessary verification inputs using the Platform Certification Key (PCK) certificate. It can be obtained prior to an actual attestation taking place, since the PCK certificate is valid for extended time periods (i.e., years) it can be cached and reused across many attestations. 
+
+![Alt text](https://github.com/jcreis/jcreis/blob/main/tech-icons/java-icon.jpg?raw=true "Title")
