@@ -5,4 +5,4 @@ Intel Software Guard Extensions (SGX) is Intel's latest technology to assure exe
 
 Here we go through what we need to setup to run code that leverages Intel SGX security benefits, and we set up and run examples (based on those provided by Intel) either on your local machine or on inside a Docker container.
 
-* An environment setup guide can be found inside the */code-experiments* folder
+* An environment setup guide can be found inside the */code-experiments* folder, in the README.md file
