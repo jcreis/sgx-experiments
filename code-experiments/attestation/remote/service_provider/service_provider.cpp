@@ -638,7 +638,7 @@ int sp_ra_proc_msg3_req(const sample_ra_msg3_t *p_msg3,
     {
         return SP_UNSUPPORTED_EXTENDED_EPID_GROUP;
     }
-
+    
     /*  ### Start preparing MSG3 ###
 
         What do we need?
@@ -658,7 +658,6 @@ int sp_ra_proc_msg3_req(const sample_ra_msg3_t *p_msg3,
             ret = SP_PROTOCOL_ERROR;
             break;
         }
-
         //Make sure that msg3_size is bigger than sample_mac_t.
         uint32_t mac_size = msg3_size - (uint32_t)sizeof(sample_mac_t);
         p_msg3_cmaced = reinterpret_cast<const uint8_t*>(p_msg3);
@@ -695,6 +694,16 @@ int sp_ra_proc_msg3_req(const sample_ra_msg3_t *p_msg3,
         }
 
         p_quote = (const sample_quote_t*)p_msg3->quote;
+
+        // Check the quote version if needed. Only check the Quote.version field if the enclave
+        // identity fields have changed or the size of the quote has changed.  The version may
+        // change without affecting the legacy fields or size of the quote structure.
+        //if(p_quote->version < ACCEPTED_QUOTE_VERSION)
+        //{
+        //    fprintf(stderr,"\nError, quote version is too old.", __FUNCTION__);
+        //    ret = SP_QUOTE_VERSION_ERROR;
+        //    break;
+        //}
 
         // Verify the report_data in the Quote matches the expected value.
         // The first 32 bytes of report_data are SHA256 HASH of {ga|gb|vk}.
@@ -750,6 +759,9 @@ int sp_ra_proc_msg3_req(const sample_ra_msg3_t *p_msg3,
             ret = SP_INTEGRITY_FAILED;
             break;
         }
+
+        // Verify Enclave policy (an attestation server may provide an API for this if we
+        // registered an Enclave policy)
 
         // Verify quote with attestation server.
         // In the product, an attestation server could use a REST message and JSON formatting to request
@@ -897,7 +909,6 @@ int sp_ra_proc_msg3_req(const sample_ra_msg3_t *p_msg3,
         }
     }while(0);
 
-    
     if(ret)
     {
         *pp_att_result_msg = NULL;
