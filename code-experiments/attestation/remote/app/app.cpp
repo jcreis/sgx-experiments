@@ -23,6 +23,10 @@
 
 #include "service_provider.h"
 
+#ifndef SAFE_FREE
+#define SAFE_FREE(ptr) {if (NULL != (ptr)) {free(ptr); (ptr) = NULL;}}
+#endif
+
 #define ENCLAVE_NAME "enclave.signed.so"
 
 void PRINT_BYTE_ARRAY(
@@ -458,4 +462,5 @@ CLEANUP:
     SAFE_FREE(p_msg1_full);
     SAFE_FREE(p_msg0_full);
 
+}
 }
