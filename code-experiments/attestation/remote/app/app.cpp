@@ -109,7 +109,7 @@ int main(int argc, char* argv[])
         //send MSG0 to the SP
         fprintf(OUTPUT, "\n>>>> Sending msg0 to SP.\n");
 
-        ret = ra_network_send_receive("url example", 
+        ret = ra_network_send_receive("some url", 
                                         p_msg0_full, 
                                         &p_msg0_resp_full);
         //now the ISV decides whether to support this extended epid group id or not
@@ -119,7 +119,7 @@ int main(int argc, char* argv[])
                     __FUNCTION__);
             goto CLEANUP;
         }
-        
+
         fprintf(OUTPUT, "\nSent MSG0 to SP.\n");
         //see what the response is:
         fprintf(OUTPUT, "\nTrying to find out what the response MSG 0 is: -\n");
@@ -137,7 +137,128 @@ int main(int argc, char* argv[])
             goto CLEANUP;
         }
         fprintf(OUTPUT, "\nCall sgx_select_att_key_id success.\n");
+
+        {
+        // ISV application creates the ISV enclave.
+        do
+        {   
+            fprintf(OUTPUT, "\n>>>> Creating the enclave.\n");
+            ret = sgx_create_enclave(ENCLAVE_NAME,
+                                        SGX_DEBUG_FLAG,
+                                        &token,
+                                        &token_updated,
+                                        &enclave_id, 0);
+            if(ret != SGX_SUCCESS)
+            {
+                ret = -1;
+                fprintf(OUTPUT, "\nError, call sgx_create_enclave fail. [%s]\n",
+                        __FUNCTION__);
+                goto CLEANUP;
+            }
+            fprintf(OUTPUT, "\nCall sgx_create_enclave success.\n");
+
+            fprintf(OUTPUT, "\n>>>> Starting RA process.\n");
+            ret = enclave_init_ra(enclave_id,
+                                    &status,
+                                    false,
+                                    &context);
+        //Ideally, this check would be around the full attestation flow.
+        } while (ret == SGX_ERROR_ENCLAVE_LOST && enclave_lost_retry_time--);
+
+        if(ret != SGX_SUCCESS || status)
+        {
+            ret = -1;
+            fprintf(OUTPUT, "\nError, call enclave_init_ra fail. [%s]\n",
+                    __FUNCTION__);
+            goto CLEANUP;
+        }
+        fprintf(OUTPUT, "\nCall enclave_init_ra success.\n");
+        
+        fprintf(OUTPUT, "\n>>>> Start generating MSG1.\n");
+        // application call uke sgx_ra_get_msg1
+        p_msg1_full = (ra_samp_request_header_t*)malloc( sizeof(ra_samp_request_header_t) + sizeof(sgx_ra_msg1_t) );
+        if(p_msg1_full == NULL)
+        {
+            ret = -1;
+            goto CLEANUP;
+        }
+        p_msg1_full->type = TYPE_RA_MSG1;
+        p_msg1_full->size = sizeof(sgx_ra_msg1_t);
+
+        /*  ### Start preparing MSG1 ###
+
+        What do we need?
+        - extended EPID GID
+
+        MSG1 = [ g_a || EPID GID ]
+
+        g_a comes in the sgx_ra_get_msg1_ex
+        */
+
+        do
+        {
+            ret = sgx_ra_get_msg1_ex(&selected_key_id, 
+                                        context, 
+                                        enclave_id, 
+                                        sgx_ra_get_ga,
+                                        (sgx_ra_msg1_t*)( (uint8_t*)p_msg1_full + sizeof(ra_samp_request_header_t) ));
+            sleep(3); // Wait 3s between retries
+        } while (ret == SGX_ERROR_BUSY && busy_retry_time--);
+
+        if(ret != SGX_SUCCESS )
+        {
+            ret = -1;
+            fprintf(OUTPUT, "\nError, call sgx_ra_get_msg1_ex fail [%s].",
+                    __FUNCTION__);
+            goto CLEANUP;
+        }
+        else
+        {
+            fprintf(OUTPUT, "\nCall sgx_ra_get_msg1_ex success.\n");
+
+            fprintf(OUTPUT, "\nMSG1 body generated -\n");
+            PRINT_BYTE_ARRAY(OUTPUT, p_msg1_full->body, p_msg1_full->size);
+        }
+
+        // The ISV application sends msg1 to the SP to get msg2,
+        // msg2 needs to be freed when no longer needed.
+        // The ISV decides whether to use linkable or unlinkable signatures.
+
+        fprintf(OUTPUT, "\n>>>> Sending msg1 to SP. " 
+                        "Expecting msg2 back.\n");
+
+        ret = ra_network_send_receive("some url",
+                                        p_msg1_full,
+                                        &p_msg2_full);
+
+        if(ret != 0 || !p_msg2_full)
+        {
+            fprintf(OUTPUT, "\nError, ra_network_send_receive for msg1 failed [%s].", 
+                    __FUNCTION__);
+            goto CLEANUP;
+        }
+        else
+        {
+            // Successfully sent msg1 and received a msg2 back.
+            // Time now to check msg2.
+            if(p_msg2_full->type != TYPE_RA_MSG2)
+            {
+                fprintf(OUTPUT, "\nError, didn't get MSG2 in response to MSG1 [%s].", 
+                        __FUNCTION__);
+                goto CLEANUP;
+            }
+        }
+
+        fprintf(OUTPUT, "\nSent MSG1 to remote attestation service "
+                                "provider. Received the following MSG2:\n");
+        PRINT_BYTE_ARRAY(OUTPUT, p_msg2_full, (uint32_t)sizeof(ra_samp_response_header_t) + p_msg2_full->size);
+    
+        // prepare msg2->body
+        sgx_ra_msg2_t* p_msg2_body = (sgx_ra_msg2_t*)((uint8_t*)p_msg2_full + sizeof(ra_samp_response_header_t));
+
+        
     }
+
     
     printf("\nEnter a character before exit ...\n");
     getchar();
@@ -175,7 +296,15 @@ CLEANUP:
 
     ra_free_network_response_buffer(p_msg0_resp_full);
     p_msg0_resp_full = NULL;
-    
+    ra_free_network_response_buffer(p_msg2_full);
+    p_msg2_full = NULL;
+    ra_free_network_response_buffer(p_att_result_msg_full);
+    p_att_result_msg_full = NULL;
+
+    // p_msg3 is malloc'd by the untrusted KE library. App needs to free.
+    SAFE_FREE(p_msg3);
+    SAFE_FREE(p_msg3_full);
+    SAFE_FREE(p_msg1_full);
     SAFE_FREE(p_msg0_full);
 
 }
