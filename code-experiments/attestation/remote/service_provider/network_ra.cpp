@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2021 Intel Corporation. All rights reserved.
+ * Copyright (C) 2011-2020 Intel Corporation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -71,7 +71,7 @@ int ra_network_send_receive(const char *server_url,
             + sizeof(ra_samp_request_header_t)),
             p_req->size,
             &p_resp_msg);
-        if (ret != 0)
+        if (0 != ret)
         {
             fprintf(stderr, "\nError, call sp_ra_proc_msg1_req fail [%s].",
                 __FUNCTION__);
@@ -87,7 +87,7 @@ int ra_network_send_receive(const char *server_url,
             + sizeof(ra_samp_request_header_t)),
             p_req->size,
             &p_resp_msg);
-        if(ret != 0)
+        if(0 != ret)
         {
             fprintf(stderr, "\nError, call sp_ra_proc_msg1_req fail [%s].",
                 __FUNCTION__);
@@ -99,7 +99,7 @@ int ra_network_send_receive(const char *server_url,
         break;
 
     case TYPE_RA_MSG3:
-        ret =sp_ra_proc_msg3_req((const sample_ra_msg3_t*)((size_t)p_req +
+        ret = sp_ra_proc_msg3_req((const sample_ra_msg3_t*)((size_t)p_req +
             sizeof(ra_samp_request_header_t)),
             p_req->size,
             &p_resp_msg);
