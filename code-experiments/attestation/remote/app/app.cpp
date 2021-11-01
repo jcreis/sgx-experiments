@@ -119,6 +119,7 @@ int main(int argc, char* argv[])
                     __FUNCTION__);
             goto CLEANUP;
         }
+        
         fprintf(OUTPUT, "\nSent MSG0 to SP.\n");
         //see what the response is:
         fprintf(OUTPUT, "\nTrying to find out what the response MSG 0 is: -\n");
