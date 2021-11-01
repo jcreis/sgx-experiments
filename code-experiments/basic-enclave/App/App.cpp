@@ -191,6 +191,23 @@ int SGX_CDECL main(int argc, char *argv[])
         return -1; 
     }
 
+    // declaring a variable to store the returned value from the ECALL
+    int r;
+
+    // to use our new add() function
+    int a = 3;
+    int b = 5;
+
+    /*  we need to specify the 'global_eid' (enclave id created in the initialize_enclave()) 
+        and the address of our variable 'r' that we just created
+        Since the enclave cannot return any value, what we do is to tell them where to write the output, 
+        so that we can retrieve it after the function completes
+    */
+    add(global_eid, &r, &a, &b);
+
+    // printing our return value
+    printf("r : %d\n", r);
+
     /* Destroy the enclave */
     sgx_destroy_enclave(global_eid);
     

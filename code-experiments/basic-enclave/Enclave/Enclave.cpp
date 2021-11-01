@@ -49,3 +49,11 @@ int printf(const char* fmt, ...)
     ocall_print_string(buf);
     return (int)strnlen(buf, BUFSIZ - 1) + 1;
 }
+
+/*
+    Basic function to understand how to make your own function inside an enclave
+*/
+int add(int *a, int *b)
+{
+    return *a+*b;
+}
