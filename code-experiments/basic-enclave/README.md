@@ -16,6 +16,9 @@ There are 3 main components:
 2) Enclave.cpp - it's the file where you implement all the functions that the application will call, that will operate within the enclave's boundaries.
 3) Enclave.edl - this file works as the interface between application and enclave. It's here where you specify which functions are to be run as an ECALL and which are to be run as an OCALL.
 
+
+## To run the code:
+
 - 1) First, we need to build the file by running $ make
      * ```$make SGX_MODE=SIM``` for building in Simulation mode (no need to have Hardware that supports SGX to compile)
      * ```$make SGX_MODE=HW``` for building in Hardware mode (the default mode specified in the Makefile)
