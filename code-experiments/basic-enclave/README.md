@@ -6,7 +6,7 @@ To build a sample enclave app, apart of the SGX Driver and SGX SDK + PSW librari
 - Enclave folder: where you'll specify which functions are to be run inside the enclave and which are not, that the untrusted app will call upon executing.
 - Makefile: build file specifying all the libraries needed to compile the executable.
 
-**Note:** If you want to change the layout of the project, you'll also need to change it in the Makefile. The Makefile is done for a generic case, if you want to custom your app, you'll need to pay attention to this file.
+**Note: If you want to change the layout of the project, you'll also need to change it in the Makefile. The Makefile is done for a generic case, if you want to custom your app, you'll need to pay attention to this file.**
 
 This app will be an extension of the work done in Intel's demo implementation - SampleEnclave - where they run an application inside an enclave that just prints information out. 
 Here, we extend the application showing how to implement any new functions inside the enclave.
