@@ -612,6 +612,8 @@ int sp_ra_proc_msg1_req(const sample_ra_msg1_t *p_msg1,
 }
 
 // MESSAGE 3
+ 
+/* 
 int sp_ra_proc_msg3_req(const sample_ra_msg3_t *p_msg3,
                         uint32_t msg3_size,
                         ra_samp_response_header_t **pp_att_result_msg)
@@ -638,16 +640,16 @@ int sp_ra_proc_msg3_req(const sample_ra_msg3_t *p_msg3,
     {
         return SP_UNSUPPORTED_EXTENDED_EPID_GROUP;
     }
-    
-    /*  ### Start preparing MSG3 ###
 
-        What do we need?
-        - g_a (App ECDH pub key)
-        - PS_SECURITY_PROPERTY
-        - Quote
-
-        MSG3 = [ CMACsmk( ga || PS_SECURITY_PROPERTY || Quote ) ]
-    */
+    //  ### Start preparing MSG3 ###
+    //
+    //  What do we need?
+    //  - g_a (App ECDH pub key)
+    //  - PS_SECURITY_PROPERTY
+    //  - Quote
+    //
+    //  MSG3 = [ CMACsmk( ga || PS_SECURITY_PROPERTY || Quote ) ]
+    //
     do
     {
         // Compare g_a in message 3 with local g_a.
@@ -921,3 +923,4 @@ int sp_ra_proc_msg3_req(const sample_ra_msg3_t *p_msg3,
     }
     return ret;
 }
+ */

@@ -299,7 +299,7 @@ int main(int argc, char* argv[])
             }
 
             PRINT_BYTE_ARRAY(OUTPUT, p_msg3, msg3_size);
-
+            /* 
             p_msg3_full = (ra_samp_request_header_t*)malloc(
                             sizeof(ra_samp_request_header_t) + msg3_size);
             if(p_msg3_full == NULL)
@@ -411,7 +411,7 @@ int main(int argc, char* argv[])
                 }
             }
             fprintf(OUTPUT, "\nSecret successfully received from server.");
-            fprintf(OUTPUT, "\nRemote attestation success!");
+            fprintf(OUTPUT, "\nRemote attestation success!"); */
         
         }
 
