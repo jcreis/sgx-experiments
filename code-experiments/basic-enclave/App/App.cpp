@@ -204,14 +204,22 @@ int SGX_CDECL main(int argc, char *argv[])
         so that we can retrieve it after the function completes
     */
     add(global_eid, &r, &a, &b);
-
     // printing our return value
-    printf("r : %d\n", r);
+    printf("ADD -> r = %d\n", r);
+
+    subtract(global_eid, &r, &a, &b);
+    printf("SUBTRACT -> r = %d\n", r);
+    
+    multiply(global_eid, &r, &a, &b);
+    printf("MULTIPLY -> r = %d\n", r);
+    
+    divide(global_eid, &r, &a, &b);
+    printf("DIVIDE -> r = %d\n", r);
 
     /* Destroy the enclave */
     sgx_destroy_enclave(global_eid);
     
-    printf("Info: SampleEnclave successfully returned.\n");
+    printf("Info: Basic Enclave successfully returned.\n");
 
     printf("Enter a character before exit ...\n");
     getchar();

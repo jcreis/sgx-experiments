@@ -58,8 +58,11 @@ enclave {
 
     trusted{
         public int add([in] int *a,[in] int *b);
+        public int subtract([in] int *a,[in] int *b);
+        public int multiply([in] int *a,[in] int *b);
+        public int divide([in] int *a,[in] int *b);
     };
-    
+
     untrusted {
         void ocall_print_string([in, string] const char *str);
     };
