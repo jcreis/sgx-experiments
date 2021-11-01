@@ -43,10 +43,14 @@ Remote attestation provides verification for three things: the application’s i
 
 The Remote Attestation mechanism needs one thing that ensures trustworthiness to the remote party - it uses a Quoting Enclave (QE) to sign Reports (Application Enclave data) to be verified by remote parties as proof of trust. To do that, the QE requires an Attestation Key. The details of how the platform acquires the attestation key and how the quote can be verified differs between the two remote attestation models: EPID and DCAP (ECDSA)
 
+![Alt text](https://github.com/jcreis/sgx-experiments/blob/main/utils/remote_attest.jpg?raw=true "Remote Attestation Procedure") 
+
+*(image from [ra_tls] whitepaper)*
+
 EPID - When using EPID attestation, the Quoting Enclave uses an EPID key as the Attestation key, that it uses to sign the quote. This attestation key is given by Intel’s Attestation Service (IAS). The Quoting Enclave proves to Intel that it is running on a genuine SGX platform (using the Root Provisioning Key) and Intel provides it an EPID key.
 
 DCAP - When using DCAP attestation, Eliptic Curve cryptography is used to sign the quote. The Quoting Enclave generates an EC key, it then uses a derivative of the Root Provisioning Key called the Provisioning Certification Key (PCK) to sign the public part of this EC key and include it in its quotes.
 
 Thus, instead of going to the Intel Attestation Service to have a quote verified, a verifier can acquire all the necessary verification inputs using the Platform Certification Key (PCK) certificate. It can be obtained prior to an actual attestation taking place, since the PCK certificate is valid for extended time periods (i.e., years) it can be cached and reused across many attestations. 
 
-![Alt text](https://github.com/jcreis/jcreis/blob/main/tech-icons/java-icon.jpg?raw=true "Title")
+[ra_tls]: https://arxiv.org/ftp/arxiv/papers/1801/1801.05863.pdf
